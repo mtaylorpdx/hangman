@@ -1,12 +1,19 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
-function AnswerForm() {
+function AnswerForm(props) {
 
   return (
     <React.Fragment>
-      <p>AnswerForm</p>
+      {props.answer.map((letter) =>
+      <p>{letter.answerLetter}</p>
+      )}
     </React.Fragment>
   )
+}
+
+AnswerForm.propTypes = {
+    answer: PropTypes.array
 }
 
 export default AnswerForm;

@@ -11,21 +11,12 @@ class HangmanControl extends React.Component {
       this.state = {
         guessed: new Set([]),
         mistake: 0,
-        answer: randomWord(),
+        answer: randomWord().split("").map(answerChar => ( { correctChoice: false, answerLetter: answerChar })),
         keyList: "abcdefghijklmnopqrstuvwxyz".split("").map(char => (
           { onKeySelection: false, letter: char}
         ))
       }
     }
-
-
-    // handleGuess = (keyGuessed) => {
-    //   const key = keyGuessed;
-    //   this.setState(state => ({
-    //     guessed: state.guessed.add(key),
-    //     mistake: state.mistake + (state.answer.includes(key) ? 0 : 1)
-    //   }));
-    // }
 
     handleUpdateKeyList = (keyGuessed) => {
       const editedKeyList = this.state.keyList
@@ -38,13 +29,23 @@ class HangmanControl extends React.Component {
       console.log(this.state);
     }
 
-    // handleCompareKey = (keyGuessed) => {
-    //     if (keyGuessed === this.state.answer.includes(keyGuessed)){
-            
-    //     } else if {
-    //         <img src={this.props.image[this.state.mistake]}
-    //     }
-    // }
+
+    handleCompareKey = (keyGuessed) => {
+      const answerCheck = this.state.answer
+      for (let i=0; i < answerCheck.length; i++ ) {
+        if (answerCheck[i].answerLetter === keyGuessed.letter) {
+          answerCheck[i] = true;
+          guessed.Push(keyGuessed)
+        }
+      }
+      this.setState({
+        answer: answerCheck
+      });
+    }
+
+    guessedWord() {
+        return this.state.answer.split("").map(letter => (this.state.guessed.has(letter) ? letter : " _ "));
+      }
 
     handleChangingSelectedKey = (letter) => {
         const selectedKey = this.props.keyList[letter];
@@ -55,8 +56,9 @@ class HangmanControl extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <HangmanImage />
-        <AnswerForm />
+        <HangmanImage img= {this.state.mistake}/>
+        <AnswerForm 
+          answer={this.state.answer}/>
         <KeyList 
           keyList={this.state.keyList.filter(k => k.selected !== true)}
           onKeySelection={this.handleUpdateKeyList} />
