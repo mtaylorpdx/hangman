@@ -3,6 +3,7 @@ import HangmanImage from './HangmanImage';
 import AnswerForm from './AnswerForm';
 import KeyList from './KeyList';
 import randomWord from './Words';
+import PlayingGame from './PlayingGame';
 
 class HangmanControl extends React.Component {
 
@@ -69,23 +70,37 @@ class HangmanControl extends React.Component {
 
   render() {
       // const isWinner = this.
-      const gameOver = this.state.mistake >= this.this.props.maxWrong;
-      let gameStat
+      let currentlyVisibleState = null;
+      let gameStat = "You lose!";
 
-      if (gameOver) {
-        gameStat = "You lose!"
-      }
+      // if (gameOver) {
+      //   gameStat = "You lose!"
+      // }
+
+
+        if (this.state.mistake >= this.props.maxWrong) {
+          currentlyVisibleState = <p>{gameStat}</p>
+        }
+        else {
+          
+          currentlyVisibleState = <PlayingGame img= {this.state.mistake} answer={this.handleAnswerDisplay()} keyList={this.state.keyList.filter(k => k.selected !== true)}
+          onKeySelection={this.handleUpdateKeyList}/>
+
+          // <HangmanImage img= {this.state.mistake}/>
+          // <AnswerForm 
+          //   answer={this.handleAnswerDisplay()}/>
+          // <KeyList
+          //   keyList={this.state.keyList.filter(k => k.selected !== true)}
+          //   onKeySelection={this.handleUpdateKeyList} />     
+        }
+ 
+  
 
     return (
-        <React.Fragment>
-        <HangmanImage img= {this.state.mistake}/>
-        <AnswerForm 
-          answer={this.handleAnswerDisplay()}/>
-        <KeyList
-          keyList={this.state.keyList.filter(k => k.selected !== true)}
-          onKeySelection={this.handleUpdateKeyList} />
-      <p>{gameStat}</p>
+      <React.Fragment>
+        {currentlyVisibleState}
       </React.Fragment>
+
     )
   }
 }
