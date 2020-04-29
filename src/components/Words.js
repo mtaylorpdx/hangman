@@ -19,4 +19,4 @@ function randomWord() {
     return animals[Math.floor(Math.random() * animals.length)]
 }
 
-export { randomWord }
+export default randomWord;

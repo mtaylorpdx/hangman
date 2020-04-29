@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 
 
 
+
 function Key(props) {
   return (
     <React.Fragment>
-      <div onClick = {() => props.whenKeyClicked(props)}>
+      <div onClick = {() => props.whenKeyClicked({letter: props.letter, selected: true})}>
       <h3>{props.letter}</h3>
       </div>
     </React.Fragment>
