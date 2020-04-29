@@ -1,8 +1,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hangman
 
-## Available Scripts
+#### A simple react game using redux to play hangman
 
-In the project directory, you can run:
+#### By Zakkrey Short, Steph Podolak, and Matt Taylor
+
+## Components Hierarchy
+
+Component Diagram
+
+![Components](src/img/hangman.jpg)
 
 ### `npm start`
 
