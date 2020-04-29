@@ -6,6 +6,10 @@ import randomWord from './Words';
 
 class HangmanControl extends React.Component {
 
+    static defaultProp = {
+        maxWrong: 6,
+    }
+
     constructor(props){
       super(props);
       this.state = {
@@ -26,26 +30,36 @@ class HangmanControl extends React.Component {
       this.setState({
         keyList: editedKeyList,
       });
-      console.log(this.state);
     }
 
 
     handleCompareKey = (keyGuessed) => {
       const answerCheck = this.state.answer
+      let mistakeCheck = 1
       for (let i=0; i < answerCheck.length; i++ ) {
         if (answerCheck[i].answerLetter === keyGuessed.letter) {
-          answerCheck[i] = true;
-          guessed.Push(keyGuessed)
+          answerCheck[i].correctChoice = true;
+          mistakeCheck = 0;
         }
       }
       this.setState({
+        mistake: this.state.mistake + mistakeCheck,
         answer: answerCheck
       });
     }
-
-    guessedWord() {
-        return this.state.answer.split("").map(letter => (this.state.guessed.has(letter) ? letter : " _ "));
-      }
+    
+    handleAnswerDisplay = () => {
+      console.log(this.state.answer);
+      const answerDisplay = this.state.answer.map((char) => {
+        console.log(char.correctChoice);
+        if (char.correctChoice === true) {
+          return char.answerLetter;
+        } else {
+          return "__";
+        }
+      })
+      return answerDisplay; 
+    }
 
     handleChangingSelectedKey = (letter) => {
         const selectedKey = this.props.keyList[letter];
@@ -54,14 +68,23 @@ class HangmanControl extends React.Component {
 
 
   render() {
+      // const isWinner = this.
+      const gameOver = this.state.mistake >= this.this.props.maxWrong;
+      let gameStat
+
+      if (gameOver) {
+        gameStat = "You lose!"
+      }
+
     return (
-      <React.Fragment>
+        <React.Fragment>
         <HangmanImage img= {this.state.mistake}/>
         <AnswerForm 
-          answer={this.state.answer}/>
-        <KeyList 
+          answer={this.handleAnswerDisplay()}/>
+        <KeyList
           keyList={this.state.keyList.filter(k => k.selected !== true)}
           onKeySelection={this.handleUpdateKeyList} />
+      <p>{gameStat}</p>
       </React.Fragment>
     )
   }
