@@ -5,14 +5,16 @@ import Keys from './Keys';
 
 class HangmanControl extends React.Component {
 
-    constructor(){
+    // constructor(){
 
-    }
+    // }
 
   render() {
     return (
       <React.Fragment>
-        
+        <HangmanImage />
+        <AnswerForm />
+        <Keys />
       </React.Fragment>
     )
   }

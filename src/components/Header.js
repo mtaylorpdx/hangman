@@ -4,7 +4,7 @@ function Header() {
 
     return (
         <React.Fragment>
-            <p>HEADER</p>
+            <p>Header</p>
         </React.Fragment>
     );
 }
