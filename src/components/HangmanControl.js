@@ -14,7 +14,6 @@ class HangmanControl extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        guessed: new Set([]),
         mistake: 0,
         answer: randomWord().split("").map(answerChar => ( { correctChoice: false, answerLetter: answerChar })),
         keyList: "abcdefghijklmnopqrstuvwxyz".split("").map(char => (
@@ -69,29 +68,26 @@ class HangmanControl extends React.Component {
 
 
   render() {
-      // const isWinner = this.
+   
       let currentlyVisibleState = null;
-      let gameStat = "You lose!";
-
-      // if (gameOver) {
-      //   gameStat = "You lose!"
-      // }
-
+      let gameStatWin = "You win!";
+      const gameStatLose = "You lose!"
+      
 
         if (this.state.mistake >= this.props.maxWrong) {
-          currentlyVisibleState = <p>{gameStat}</p>
+          currentlyVisibleState = <p>{gameStatLose}</p>
         }
-        else {
+       
+        if (this.state.answer.includes("_")){
+        currentlyVisibleState = <p>{gameStatWin}</p>
+        }
           
-          currentlyVisibleState = <PlayingGame img= {this.state.mistake} answer={this.handleAnswerDisplay()} keyList={this.state.keyList.filter(k => k.selected !== true)}
-          onKeySelection={this.handleUpdateKeyList}/>
-
-          // <HangmanImage img= {this.state.mistake}/>
-          // <AnswerForm 
-          //   answer={this.handleAnswerDisplay()}/>
-          // <KeyList
-          //   keyList={this.state.keyList.filter(k => k.selected !== true)}
-          //   onKeySelection={this.handleUpdateKeyList} />     
+        else {
+          currentlyVisibleState = <PlayingGame 
+            img= {this.state.mistake} 
+            answer={this.handleAnswerDisplay()} 
+            keyList={this.state.keyList.filter(k => k.selected !== true)}
+            onKeySelection={this.handleUpdateKeyList}/>    
         }
  
   
