@@ -4,6 +4,7 @@ import AnswerForm from './AnswerForm';
 import KeyList from './KeyList';
 import randomWord from './Words';
 import PlayingGame from './PlayingGame';
+import { connect } from 'react-redux';
 
 class HangmanControl extends React.Component {
 
@@ -23,14 +24,45 @@ class HangmanControl extends React.Component {
     }
 
     handleUpdateKeyList = (keyGuessed) => {
-      const editedKeyList = this.state.keyList
-        .filter(key => key.letter !== keyGuessed.letter)
-        .concat(keyGuessed)
-      this.handleCompareKey(keyGuessed);
-      this.setState({
-        keyList: editedKeyList,
-      });
+      const { dispatch } = this.props;
+      const { letter, selected } = keyGuessed;
+      const action = {
+        type: 'SELECT_KEY',
+        letter: letter,
+        selected: selected
+      }
+      dispatch(action);
     }
+
+
+    // handleEditingTicketInList = (ticketToEdit) => {
+    //   const { dispatch } = this.props;
+    //   const { id, names, location, issue } = ticketToEdit;
+    //   const action = {
+    //     type: 'ADD_TICKET',
+    //     id: id,
+    //     names: names,
+    //     location: location,
+    //     issue: issue,
+    //   }
+    //   dispatch(action);
+    //   this.setState({
+    //     editing: false,
+    //     selectedTicket: null
+    //   });
+    // }
+    
+
+
+    // handleUpdateKeyList = (keyGuessed) => {
+    //   const editedKeyList = this.state.keyList
+    //     .filter(key => key.letter !== keyGuessed.letter)
+    //     .concat(keyGuessed)
+    //   this.handleCompareKey(keyGuessed);
+    //   this.setState({
+    //     keyList: editedKeyList,
+    //   });
+    // }
 
 
     handleCompareKey = (keyGuessed) => {
@@ -104,5 +136,7 @@ class HangmanControl extends React.Component {
 // HangmanControl = {
 //     masterItemList: PropTypes.object
 //   };
+
+HangmanControl = connect()(HangmanControl);
 
 export default HangmanControl;
