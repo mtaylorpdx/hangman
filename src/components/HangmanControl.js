@@ -24,12 +24,14 @@ class HangmanControl extends React.Component {
     }
 
     handleUpdateKeyList = (keyGuessed) => {
+      console.log(this.state);
       const { dispatch } = this.props;
       const { letter, selected } = keyGuessed;
       const action = {
         type: 'SELECT_KEY',
         letter: letter,
-        selected: selected
+        selected: selected,
+        keyList: this.state.keyList
       }
       dispatch(action);
     }
@@ -118,11 +120,9 @@ class HangmanControl extends React.Component {
           currentlyVisibleState = <PlayingGame 
             img= {this.state.mistake} 
             answer={this.handleAnswerDisplay()} 
-            keyList={this.state.keyList.filter(k => k.selected !== true)}
+            keyList={this.props.keyList.filter(k => k.selected !== true)}
             onKeySelection={this.handleUpdateKeyList}/>    
         }
- 
-  
 
     return (
       <React.Fragment>
